@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guess The Movie - MovieMaze</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    padding:30px;
+}
+
+.container{
+    background:#222;
+    padding:30px;
+    border-radius:10px;
+    max-width:700px;
+    margin:auto;
+}
+
+button{
+    background:#ffc107;
+    border:none;
+    padding:12px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+a{
+    color:#ffc107;
+    text-decoration:none;
+}
+
+</style>
+
+<script>
+
+function showAnswer(){
+    document.getElementById("answer").innerHTML =
+    "✅ Titanic";
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎬 Guess The Movie</h1>
+
+<h2>Question 1</h2>
+
+<p>
+🚢 A famous ship sinks.<br><br>
+❤️ Jack and Rose become friends.<br><br>
+🌊 The story happens mostly at sea.
+</p>
+
+<button onclick="showAnswer()">
+Show Answer
+</button>
+
+<h3 id="answer"></h3>
+
+<br><br>
+
+index.html
+
+</div>
+
+</body>
+</html>
