@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guess The Movie - MovieMaze</title>
+<title>MovieMaze Quiz</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,41 +12,49 @@ body{
     color:white;
     font-family:Arial,sans-serif;
     text-align:center;
-    padding:30px;
+    padding:20px;
 }
 
 .container{
+    max-width:700px;
+    margin:auto;
     background:#222;
     padding:30px;
     border-radius:10px;
-    max-width:700px;
-    margin:auto;
 }
 
-button{
+.option{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:5px;
+    background:#333;
+    color:white;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#444;
+}
+
+#result{
+    font-size:20px;
+    margin-top:15px;
+}
+
+#nextBtn{
     background:#ffc107;
     border:none;
     padding:12px 20px;
-    border-radius:6px;
+    border-radius:5px;
     cursor:pointer;
-    font-size:16px;
-}
-
-a{
-    color:#ffc107;
-    text-decoration:none;
+    display:none;
+    margin-top:15px;
 }
 
 </style>
-
-<script>
-
-function showAnswer(){
-    document.getElementById("answer").innerHTML =
-    "✅ Titanic";
-}
-
-</script>
 
 </head>
 
@@ -54,27 +62,139 @@ function showAnswer(){
 
 <div class="container">
 
-<h1>🎬 Guess The Movie</h1>
+<h1>🎬 MovieMaze</h1>
 
-<h2>Question 1</h2>
+<h2 id="question"></h2>
 
-<p>
-🚢 A famous ship sinks.<br><br>
-❤️ Jack and Rose become friends.<br><br>
-🌊 The story happens mostly at sea.
-</p>
+<div id="options"></div>
 
-<button onclick="showAnswer()">
-Show Answer
+<p id="result"></p>
+
+<button id="nextBtn" onclick="nextQuestion()">
+Next Question
 </button>
 
-<h3 id="answer"></h3>
-
-<br><br>
-
-index.html
-
 </div>
+
+<script>
+
+const quiz = [
+
+{
+question:"Which movie features Jack and Rose?",
+options:["Avatar","Titanic","Inception","Gladiator"],
+answer:"Titanic"
+},
+
+{
+question:"Who played Iron Man?",
+options:["Chris Evans","Tom Holland","Robert Downey Jr.","Chris Hemsworth"],
+answer:"Robert Downey Jr."
+},
+
+{
+question:"Which movie has Rancho as a character?",
+options:["PK","Dangal","3 Idiots","Ghajini"],
+answer:"3 Idiots"
+},
+
+{
+question:"Which movie features the character Batman?",
+options:["Superman","Joker","The Dark Knight","Thor"],
+answer:"The Dark Knight"
+},
+
+{
+question:"Which movie is about dinosaurs escaping a park?",
+options:["Avatar","Jurassic Park","Titanic","Matrix"],
+answer:"Jurassic Park"
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion(){
+
+document.getElementById("result").innerHTML="";
+document.getElementById("nextBtn").style.display="none";
+
+let q = quiz[currentQuestion];
+
+document.getElementById("question").innerHTML =
+(q.question);
+
+let optionsHtml="";
+
+q.options.forEach(option => {
+
+optionsHtml +=
+`<button class="option"
+onclick="checkAnswer('${option}')">
+${option}
+</button>`;
+
+});
+
+document.getElementById("options").innerHTML =
+optionsHtml;
+
+}
+
+function checkAnswer(selected){
+
+let correct = quiz[currentQuestion].answer;
+
+if(selected===correct){
+
+score++;
+
+document.getElementById("result").innerHTML =
+"✅ Correct!";
+
+}
+else{
+
+document.getElementById("result").innerHTML =
+"❌ Wrong! Correct answer: " + correct;
+
+}
+
+document.getElementById("nextBtn").style.display =
+"inline-block";
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion < quiz.length){
+
+loadQuestion();
+
+}
+else{
+
+document.querySelector(".container").innerHTML =
+`
+<h1>🎉 Quiz Completed</h1>
+
+<h2>Your Score: ${score} / ${quiz.length}</h2>
+
+<button onclick="location.reload()">
+Play Again
+</button>
+`;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
 
 </body>
 </html>
