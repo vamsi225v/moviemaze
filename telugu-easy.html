@@ -70,7 +70,7 @@ font-size:16px;
 
 <div class="stats">
 <span id="progress"></span>
- |
+|
 <span id="scoreDisplay"></span>
 </div>
 
@@ -399,50 +399,17 @@ document.querySelector(".container").innerHTML = `
 ✅ Congratulations!
 </p>
 
-<p>
+<p style="font-size:18px;">
 You are eligible for Medium Level
 </p>
 
-telugu-medium.html
-🚀 Start Medium Level
-</a>
-
-<br><br>
-
-<button onclick="location.reload()">
-Play Again
-</button>
-`;
-
-}else{
-
-document.querySelector(".container").innerHTML = `
-<h1>🎉 Telugu Easy Completed</h1>
-
-<h2>Score: ${score}/${quiz.length}</h2>
-
-<h3>${badge}</h3>
-
-<p>Accuracy: ${accuracy}%</p>
-
-<p style="color:#ff6666;">
-❌ You need at least 10/15 to unlock Medium
+<p>
+Loading Medium Level...
 </p>
-
-<button onclick="location.reload()">
-Try Again
-</button>
 `;
 
-}
+setTimeout(function(){
+window.location.href = "telugu-medium.html";
+},3000);
 
 }
-
-}
-
-loadQuestion();
-
-</script>
-
-</body>
-</html>
