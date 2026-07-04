@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Telugu Quiz - MovieMaze</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+background:#111;
+color:white;
+font-family:Arial,sans-serif;
+text-align:center;
+padding:20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:#222;
+padding:30px;
+border-radius:10px;
+}
+
+.option{
+display:block;
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+background:#333;
+color:white;
+cursor:pointer;
+}
+
+.option:hover{
+background:#444;
+}
+
+#result{
+font-size:20px;
+margin-top:15px;
+}
+
+#nextBtn{
+background:#ffc107;
+border:none;
+padding:12px 20px;
+border-radius:5px;
+cursor:pointer;
+display:none;
+margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🟦 Telugu Movie Quiz</h1>
+
+<h3 id="question"></h3>
+
+<div id="options"></div>
+
+<p id="result"></p>
+
+<button id="nextBtn" onclick="nextQuestion()">
+Next Question
+</button>
+
+</div>
+
+<script>
+
+const quiz = [
+
+{
+question:"Who played Pushpa Raj?",
+options:["Prabhas","Allu Arjun","Nani","Ram Charan"],
+answer:"Allu Arjun"
+},
+
+{
+question:"Which movie features Amarendra Baahubali?",
+options:["Salaar","Pushpa","Baahubali","Eega"],
+answer:"Baahubali"
+},
+
+{
+question:"Who directed RRR?",
+options:["Trivikram","Sukumar","Rajamouli","Koratala Siva"],
+answer:"Rajamouli"
+},
+
+{
+question:"Which actor starred in Salaar?",
+options:["NTR","Prabhas","Nani","Mahesh Babu"],
+answer:"Prabhas"
+},
+
+{
+question:"Who played Bhanwar Singh Shekhawat in Pushpa?",
+options:["Fahadh Faasil","Jagapathi Babu","Sunil","Rao Ramesh"],
+answer:"Fahadh Faasil"
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion(){
+
+document.getElementById("result").innerHTML="";
+document.getElementById("nextBtn").style.display="none";
+
+let q = quiz[currentQuestion];
+
+document.getElementById("question").innerHTML =
+`Question ${currentQuestion+1} of ${quiz.length}<br><br>${q.question}`;
+
+let html="";
+
+q.options.forEach(option=>{
+html += `
+<button class="option"
+onclick="checkAnswer('${option}')">
+${option}
+</button>
+`;
+});
+
+document.getElementById("options").innerHTML=html;
+
+}
+
+function checkAnswer(selected){
+
+let correct = quiz[currentQuestion].answer;
+
+if(selected===correct){
+
+score++;
+
+document.getElementById("result").innerHTML =
+"✅ Correct";
+
+}else{
+
+document.getElementById("result").innerHTML =
+"❌ Wrong. Correct answer: " + correct;
+
+}
+
+document.getElementById("nextBtn").style.display="inline-block";
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion < quiz.length){
+
+loadQuestion();
+
+}else{
+
+document.querySelector(".container").innerHTML = `
+<h1>🎉 Telugu Quiz Completed</h1>
+<h2>Score: ${score}/${quiz.length}</h2>
+<button onclick="location.reload()">Play Again</button>
+`;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
