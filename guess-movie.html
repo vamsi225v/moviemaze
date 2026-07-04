@@ -2,60 +2,66 @@
 <html>
 <head>
 <title>MovieMaze Quiz</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
 body{
-    background:#111;
-    color:white;
-    font-family:Arial,sans-serif;
-    text-align:center;
-    padding:20px;
+background:#111;
+color:white;
+font-family:Arial,sans-serif;
+text-align:center;
+padding:20px;
 }
 
 .container{
-    max-width:700px;
-    margin:auto;
-    background:#222;
-    padding:30px;
-    border-radius:10px;
+max-width:700px;
+margin:auto;
+background:#222;
+padding:30px;
+border-radius:12px;
 }
 
 .option{
-    display:block;
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:none;
-    border-radius:5px;
-    background:#333;
-    color:white;
-    cursor:pointer;
+display:block;
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+background:#333;
+color:white;
+cursor:pointer;
+font-size:16px;
 }
 
 .option:hover{
-    background:#444;
+background:#444;
 }
 
 #result{
-    font-size:20px;
-    margin-top:15px;
+font-size:20px;
+margin-top:10px;
 }
 
 #nextBtn{
-    background:#ffc107;
-    border:none;
-    padding:12px 20px;
-    border-radius:5px;
-    cursor:pointer;
-    display:none;
-    margin-top:15px;
+display:none;
+background:#ffc107;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+cursor:pointer;
+margin-top:15px;
+font-size:16px;
+}
+
+.stats{
+margin-bottom:20px;
+color:#ffc107;
+font-weight:bold;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -63,6 +69,12 @@ body{
 <div class="container">
 
 <h1>🎬 MovieMaze</h1>
+
+<div class="stats">
+<span id="progress"></span>
+&nbsp; | &nbsp;
+<span id="scoreDisplay"></span>
+</div>
 
 <h2 id="question"></h2>
 
@@ -78,7 +90,7 @@ Next Question
 
 <script>
 
-const quiz = [
+const allQuestions = [
 
 {
 question:"Which movie features Jack and Rose?",
@@ -99,102 +111,52 @@ answer:"3 Idiots"
 },
 
 {
-question:"Which movie features the character Batman?",
-options:["Superman","Joker","The Dark Knight","Thor"],
+question:"Which movie features Batman?",
+options:["Thor","The Dark Knight","Avatar","Joker"],
 answer:"The Dark Knight"
 },
 
 {
-question:"Which movie is about dinosaurs escaping a park?",
-options:["Avatar","Jurassic Park","Titanic","Matrix"],
+question:"Dinosaurs escape a theme park in which movie?",
+options:["Avatar","Titanic","Jurassic Park","Matrix"],
 answer:"Jurassic Park"
-}
+},
 
-];
+{
+question:"Who played Pushpa Raj?",
+options:["Nani","Ram Charan","Allu Arjun","Prabhas"],
+answer:"Allu Arjun"
+},
 
-let currentQuestion = 0;
-let score = 0;
+{
+question:"Which movie stars Amarendra Baahubali?",
+options:["RRR","Salaar","Pushpa","Baahubali"],
+answer:"Baahubali"
+},
 
-function loadQuestion(){
+{
+question:"Who directed RRR?",
+options:["Rajamouli","Sukumar","Trivikram","Koratala Siva"],
+answer:"Rajamouli"
+},
 
-document.getElementById("result").innerHTML="";
-document.getElementById("nextBtn").style.display="none";
+{
+question:"Who played Harry Potter?",
+options:["Daniel Radcliffe","Tom Holland","Chris Pratt","Matt Damon"],
+answer:"Daniel Radcliffe"
+},
 
-let q = quiz[currentQuestion];
+{
+question:"Which movie features the Avengers?",
+options:["Justice League","Avengers Endgame","Batman Begins","Joker"],
+answer:"Avengers Endgame"
+},
 
-document.getElementById("question").innerHTML =
-(q.question);
+{
+question:"Who played Joker in The Dark Knight?",
+options:["Christian Bale","Heath Ledger","Tom Hardy","Ben Affleck"],
+answer:"Heath Ledger"
+},
 
-let optionsHtml="";
-
-q.options.forEach(option => {
-
-optionsHtml +=
-`<button class="option"
-onclick="checkAnswer('${option}')">
-${option}
-</button>`;
-
-});
-
-document.getElementById("options").innerHTML =
-optionsHtml;
-
-}
-
-function checkAnswer(selected){
-
-let correct = quiz[currentQuestion].answer;
-
-if(selected===correct){
-
-score++;
-
-document.getElementById("result").innerHTML =
-"✅ Correct!";
-
-}
-else{
-
-document.getElementById("result").innerHTML =
-"❌ Wrong! Correct answer: " + correct;
-
-}
-
-document.getElementById("nextBtn").style.display =
-"inline-block";
-
-}
-
-function nextQuestion(){
-
-currentQuestion++;
-
-if(currentQuestion < quiz.length){
-
-loadQuestion();
-
-}
-else{
-
-document.querySelector(".container").innerHTML =
-`
-<h1>🎉 Quiz Completed</h1>
-
-<h2>Your Score: ${score} / ${quiz.length}</h2>
-
-<button onclick="location.reload()">
-Play Again
-</button>
-`;
-
-}
-
-}
-
-loadQuestion();
-
-</script>
-
-</body>
-</html>
+{
+question:"Which movie features
