@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Telugu Easy Quiz - MovieMaze</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
@@ -282,39 +283,41 @@ shuffle(allQuestions);
 
 const quiz = allQuestions.slice(0,15);
 
-let currentQuestion=0;
-let score=0;
-let answered=false;
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
 
 function loadQuestion(){
 
-answered=false;
+answered = false;
 
-document.getElementById("result").innerHTML="";
-document.getElementById("nextBtn").style.display="none";
+document.getElementById("result").innerHTML = "";
+document.getElementById("nextBtn").style.display = "none";
 
-document.getElementById("progress").innerHTML=
+document.getElementById("progress").innerHTML =
 `Question ${currentQuestion+1} of ${quiz.length}`;
 
-document.getElementById("scoreDisplay").innerHTML=
+document.getElementById("scoreDisplay").innerHTML =
 `Score: ${score}`;
 
-let q=quiz[currentQuestion];
+const q = quiz[currentQuestion];
 
-document.getElementById("question").innerHTML=q.question;
+document.getElementById("question").innerHTML = q.question;
 
-let html="";
+let html = "";
 
-q.options.forEach(option=>{
+q.options.forEach(option => {
+
 html += `
 <button class="option"
 onclick="checkAnswer(this,'${option}')">
 ${option}
 </button>
 `;
+
 });
 
-document.getElementById("options").innerHTML=html;
+document.getElementById("options").innerHTML = html;
 
 }
 
@@ -322,56 +325,61 @@ function checkAnswer(button,selected){
 
 if(answered) return;
 
-answered=true;
+answered = true;
 
-let correct=quiz[currentQuestion].answer;
+let correct = quiz[currentQuestion].answer;
 
-let buttons=document.querySelectorAll(".option");
+let buttons = document.querySelectorAll(".option");
 
-buttons.forEach(btn=>{
-btn.disabled=true;
+buttons.forEach(btn => {
 
-if(btn.innerText===correct){
+btn.disabled = true;
+
+if(btn.innerText === correct){
 btn.classList.add("correct");
 }
+
 });
 
-if(selected===correct){
+if(selected === correct){
 
 score++;
 
-document.getElementById("result").innerHTML="✅ Correct!";
+document.getElementById("result").innerHTML =
+"✅ Correct!";
 
 }else{
 
 button.classList.add("wrong");
 
-document.getElementById("result").innerHTML=
-"❌ Wrong! Correct answer: "+correct;
+document.getElementById("result").innerHTML =
+"❌ Wrong! Correct answer: " + correct;
 
 }
 
-document.getElementById("scoreDisplay").innerHTML=
+document.getElementById("scoreDisplay").innerHTML =
 `Score: ${score}`;
 
-document.getElementById("nextBtn").style.display="inline-block";
+document.getElementById("nextBtn").style.display =
+"inline-block";
+
 }
 
 function nextQuestion(){
 
 currentQuestion++;
 
-if(currentQuestion<quiz.length){
+if(currentQuestion < quiz.length){
 
 loadQuestion();
 
 }else{
 
-let badge="🍿 New Viewer";
+let badge = "🍿 New Viewer";
 
-if(score>=6) badge="🎬 Movie Fan";
-if(score>=10) badge="🌟 Movie Buff";
-if(score>=13) badge="🏆 Telugu Legend";
+if(score >= 6) badge = "🎬 Movie Fan";
+if(score >= 10) badge = "🌟 Movie Buff";
+if(score >= 13) badge = "🏆 Telugu Legend";
 
 let accuracy =
 Math.round((score/quiz.length)*100);
@@ -391,37 +399,17 @@ document.querySelector(".container").innerHTML = `
 ✅ Congratulations!
 </p>
 
-<p style="font-size:18px;">
+<p>
 You are eligible for Medium Level
 </p>
 
-<a href="telugu-medium.html"
-style="
-display:inline-block;
-padding:12px 25px;
-background:#28a745;
-color:white;
-text-decoration:none;
-border-radius:8px;
-font-size:18px;
-font-weight:bold;
-margin-top:10px;
-">
+telugu-medium.html
 🚀 Start Medium Level
 </a>
 
 <br><br>
 
-<button
-onclick="location.reload()"
-style="
-padding:12px 20px;
-background:#ffc107;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
-">
+<button onclick="location.reload()">
 Play Again
 </button>
 `;
@@ -437,25 +425,23 @@ document.querySelector(".container").innerHTML = `
 
 <p>Accuracy: ${accuracy}%</p>
 
-<p style="color:#ff6666;font-size:20px;">
+<p style="color:#ff6666;">
 ❌ You need at least 10/15 to unlock Medium
 </p>
 
-<button
-onclick="location.reload()"
-style="
-padding:12px 20px;
-background:#ffc107;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
-">
+<button onclick="location.reload()">
 Try Again
 </button>
 `;
 
 }
+
+}
+
+}
+
+loadQuestion();
+
 </script>
 
 </body>
