@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Easy V2 Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+background:#111;
+color:white;
+font-family:Arial,sans-serif;
+text-align:center;
+padding:20px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:#222;
+padding:30px;
+border-radius:12px;
+}
+
+.option{
+display:block;
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+background:#333;
+color:white;
+cursor:pointer;
+}
+
+.correct{
+background:green !important;
+}
+
+.wrong{
+background:red !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🟢 Telugu Easy V2</h1>
+
+<h2 id="question"></h2>
+
+<div id="options"></div>
+
+<p id="result"></p>
+
+<button id="nextBtn" style="display:none;" onclick="nextQuestion()">
+Next
+</
