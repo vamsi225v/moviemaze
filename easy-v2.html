@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Easy V2 Test</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telugu Easy V2</title>
 
 <style>
 body{
-    background:#111;
-    color:white;
-    font-family:Arial,sans-serif;
-    text-align:center;
-    padding:20px;
+background:#111;
+color:white;
+font-family:Arial,sans-serif;
+padding:20px;
+text-align:center;
 }
 
 .container{
-    max-width:800px;
-    margin:auto;
-    background:#222;
-    padding:30px;
-    border-radius:12px;
+max-width:800px;
+margin:auto;
+background:#222;
+padding:30px;
+border-radius:12px;
 }
 
 .option{
-    display:block;
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:none;
-    border-radius:8px;
-    background:#333;
-    color:white;
-    cursor:pointer;
-    font-size:16px;
+display:block;
+width:100%;
+padding:12px;
+margin:10px 0;
+background:#333;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
 }
 
 .correct{
-    background:green !important;
+background:green !important;
 }
 
 .wrong{
-    background:red !important;
+background:red !important;
 }
 
 #nextBtn{
-    display:none;
-    background:#ffc107;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:15px;
+display:none;
+padding:12px 20px;
+background:#ffc107;
+border:none;
+border-radius:8px;
+cursor:pointer;
 }
 </style>
 </head>
@@ -75,25 +74,21 @@ Next
 <script>
 
 const quiz = [
-
 {
 question:"Who directed RRR?",
 options:["Rajamouli","Sukumar","Trivikram","Puri Jagannadh"],
 answer:"Rajamouli"
 },
-
 {
 question:"Who played Pushpa Raj?",
 options:["Allu Arjun","Nani","Prabhas","Ram Charan"],
 answer:"Allu Arjun"
 },
-
 {
 question:"Who directed Pushpa?",
 options:["Sukumar","Rajamouli","Boyapati","Trivikram"],
 answer:"Sukumar"
 }
-
 ];
 
 let currentQuestion = 0;
@@ -101,22 +96,22 @@ let score = 0;
 
 function loadQuestion(){
 
-let q = quiz[currentQuestion];
+const q = quiz[currentQuestion];
 
-document.getElementById("question").innerHTML = q.question;
+document.getElementById("question").textContent = q.question;
 
 let html = "";
 
-q.options.forEach(option => {
+for(let i=0;i<q.options.length;i++){
 
 html += `
 <button class="option"
-onclick="checkAnswer(this,'${option}')">
-${option}
+onclick="checkAnswer(this,'${q.options[i]}')">
+${q.options[i]}
 </button>
 `;
 
-});
+}
 
 document.getElementById("options").innerHTML = html;
 
@@ -128,38 +123,28 @@ document.getElementById("nextBtn").style.display = "none";
 
 function checkAnswer(button,selected){
 
-let correct = quiz[currentQuestion].answer;
+const correct = quiz[currentQuestion].answer;
 
-let buttons = document.querySelectorAll(".option");
+const buttons = document.querySelectorAll(".option");
 
-buttons.forEach(btn => {
+buttons.forEach(btn=>{
+btn.disabled=true;
 
-btn.disabled = true;
-
-if(btn.innerText === correct){
+if(btn.textContent===correct){
 btn.classList.add("correct");
 }
-
 });
 
-if(selected === correct){
-
+if(selected===correct){
 score++;
-
-document.getElementById("result").innerHTML =
-"✅ Correct";
-
-}else{
-
+document.getElementById("result").innerHTML="✅ Correct";
+}
+else{
 button.classList.add("wrong");
-
-document.getElementById("result").innerHTML =
-"❌ Wrong";
-
+document.getElementById("result").innerHTML="❌ Wrong";
 }
 
-document.getElementById("nextBtn").style.display =
-"inline-block";
+document.getElementById("nextBtn").style.display="inline-block";
 
 }
 
@@ -171,16 +156,19 @@ if(currentQuestion < quiz.length){
 
 loadQuestion();
 
-}else{
+}
+else{
 
 document.querySelector(".container").innerHTML = `
 <h1>🎉 Quiz Complete</h1>
 
 <h2>Score: ${score}/${quiz.length}</h2>
 
+<br>
+
 telugu-medium.html
-Go To Medium
-</button>
+🚀 Go To Medium
+</a>
 `;
 
 }
