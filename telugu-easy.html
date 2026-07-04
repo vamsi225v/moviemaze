@@ -1,13 +1,194 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Telugu Easy Quiz</title>
+<title>Telugu Easy Quiz - MovieMaze</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+background:#111;
+color:white;
+font-family:Arial,sans-serif;
+text-align:center;
+padding:20px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:#222;
+padding:30px;
+border-radius:12px;
+}
+
+.option{
+display:block;
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+background:#333;
+color:white;
+cursor:pointer;
+font-size:16px;
+}
+
+.correct{
+background:green !important;
+}
+
+.wrong{
+background:red !important;
+}
+
+.stats{
+color:#ffc107;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+#nextBtn{
+display:none;
+background:#ffc107;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+cursor:pointer;
+margin-top:15px;
+}
+
+</style>
 </head>
-<body style="background:#111;color:white;font-family:Arial;text-align:center;padding:50px;">
+
+<body>
+
+<div class="container">
 
 <h1>🟢 Telugu Easy Quiz</h1>
 
-<h2>Coming Soon</h2>
+<div class="stats">
+<span id="progress"></span>
+|
+<span id="scoreDisplay"></span>
+</div>
 
-</body>
-</html>
+<h2 id="question"></h2>
+
+<div id="options"></div>
+
+<p id="result"></p>
+
+<button id="nextBtn" onclick="nextQuestion()">
+Next Question
+</button>
+
+</div>
+
+<script>
+
+const quiz = [
+
+{
+question:"Who directed RRR?",
+options:["Trivikram","Rajamouli","Sukumar","Puri Jagannadh"],
+answer:"Rajamouli"
+},
+
+{
+question:"Who played Pushpa Raj?",
+options:["Nani","Prabhas","Allu Arjun","Ram Charan"],
+answer:"Allu Arjun"
+},
+
+{
+question:"Who starred as Deva in Salaar?",
+options:["NTR","Prabhas","Nani","Sharwanand"],
+answer:"Prabhas"
+},
+
+{
+question:"Who portrayed Kattappa?",
+options:["Prakash Raj","Rao Ramesh","Sathyaraj","Jagapathi Babu"],
+answer:"Sathyaraj"
+},
+
+{
+question:"Who composed music for Ala Vaikunthapurramuloo?",
+options:["DSP","Thaman S","Keeravani","Mani Sharma"],
+answer:"Thaman S"
+},
+
+{
+question:"What was Mahesh Babu's character name in Pokiri?",
+options:["Pandu","Ajay","Krishna","Surya"],
+answer:"Pandu"
+},
+
+{
+question:"Who played Obul Reddy in Okkadu?",
+options:["Prakash Raj","Rao Ramesh","Sonu Sood","Jagapathi Babu"],
+answer:"Prakash Raj"
+},
+
+{
+question:"Which actor starred in Agent Sai Srinivasa Athreya?",
+options:["Adivi Sesh","Naveen Polishetty","Nani","Siddhu"],
+answer:"Naveen Polishetty"
+},
+
+{
+question:"Who directed Pushpa?",
+options:["Rajamouli","Sukumar","Boyapati","Trivikram"],
+answer:"Sukumar"
+},
+
+{
+question:"Who played Bhanwar Singh in Pushpa?",
+options:["Sunil","Rao Ramesh","Jagapathi Babu","Fahadh Faasil"],
+answer:"Fahadh Faasil"
+},
+
+{
+question:"Which movie features Amarendra Baahubali?",
+options:["Pushpa","RRR","Baahubali","Salaar"],
+answer:"Baahubali"
+},
+
+{
+question:"Who played the lead role in Eega?",
+options:["Nani","Nagarjuna","Venkatesh","Prabhas"],
+answer:"Nani"
+},
+
+{
+question:"Who directed Athadu?",
+options:["Trivikram","Rajamouli","Puri Jagannadh","Sukumar"],
+answer:"Trivikram"
+},
+
+{
+question:"Which actor starred in HIT: The First Case?",
+options:["Sharwanand","Nani","Vishwak Sen","Adivi Sesh"],
+answer:"Vishwak Sen"
+},
+
+{
+question:"Who composed music for Pushpa?",
+options:["DSP","Thaman","Keeravani","Mani Sharma"],
+answer:"DSP"
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let answered=false;
+
+function loadQuestion(){
+
+answered=false;
+
+document.getElementById("result").innerHTML="";
+document.getElementById
