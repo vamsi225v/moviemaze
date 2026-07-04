@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body{
 background:#111;
 color:white;
@@ -27,40 +26,26 @@ display:block;
 width:100%;
 padding:12px;
 margin:10px 0;
-border:none;
-border-radius:6px;
 background:#333;
 color:white;
+border:none;
+border-radius:8px;
 cursor:pointer;
-font-size:16px;
 }
 
 .option:hover{
 background:#444;
 }
 
-#result{
-font-size:20px;
-margin-top:10px;
-}
-
 #nextBtn{
 display:none;
+margin-top:15px;
+padding:10px 20px;
 background:#ffc107;
 border:none;
-padding:12px 20px;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
-margin-top:15px;
-font-size:16px;
 }
-
-.stats{
-margin-bottom:20px;
-color:#ffc107;
-font-weight:bold;
-}
-
 </style>
 </head>
 
@@ -70,93 +55,111 @@ font-weight:bold;
 
 <h1>🎬 MovieMaze</h1>
 
-<div class="stats">
-<span id="progress"></span>
-&nbsp; | &nbsp;
-<span id="scoreDisplay"></span>
-</div>
-
+<h3 id="progress"></h3>
 <h2 id="question"></h2>
 
 <div id="options"></div>
 
 <p id="result"></p>
 
-<button id="nextBtn" onclick="nextQuestion()">
-Next Question
-</button>
+<button id="nextBtn" onclick="nextQuestion()">Next Question</button>
 
 </div>
 
 <script>
 
-const allQuestions = [
-
+const quiz = [
 {
 question:"Which movie features Jack and Rose?",
 options:["Avatar","Titanic","Inception","Gladiator"],
 answer:"Titanic"
 },
-
 {
 question:"Who played Iron Man?",
 options:["Chris Evans","Tom Holland","Robert Downey Jr.","Chris Hemsworth"],
 answer:"Robert Downey Jr."
 },
-
 {
 question:"Which movie has Rancho as a character?",
 options:["PK","Dangal","3 Idiots","Ghajini"],
 answer:"3 Idiots"
 },
-
-{
-question:"Which movie features Batman?",
-options:["Thor","The Dark Knight","Avatar","Joker"],
-answer:"The Dark Knight"
-},
-
-{
-question:"Dinosaurs escape a theme park in which movie?",
-options:["Avatar","Titanic","Jurassic Park","Matrix"],
-answer:"Jurassic Park"
-},
-
 {
 question:"Who played Pushpa Raj?",
 options:["Nani","Ram Charan","Allu Arjun","Prabhas"],
 answer:"Allu Arjun"
 },
-
 {
 question:"Which movie stars Amarendra Baahubali?",
 options:["RRR","Salaar","Pushpa","Baahubali"],
 answer:"Baahubali"
-},
+}
+];
 
-{
-question:"Who directed RRR?",
-options:["Rajamouli","Sukumar","Trivikram","Koratala Siva"],
-answer:"Rajamouli"
-},
+let currentQuestion = 0;
+let score = 0;
 
-{
-question:"Who played Harry Potter?",
-options:["Daniel Radcliffe","Tom Holland","Chris Pratt","Matt Damon"],
-answer:"Daniel Radcliffe"
-},
+function loadQuestion(){
 
-{
-question:"Which movie features the Avengers?",
-options:["Justice League","Avengers Endgame","Batman Begins","Joker"],
-answer:"Avengers Endgame"
-},
+document.getElementById("progress").innerHTML =
+`Question ${currentQuestion + 1} of ${quiz.length}`;
 
-{
-question:"Who played Joker in The Dark Knight?",
-options:["Christian Bale","Heath Ledger","Tom Hardy","Ben Affleck"],
-answer:"Heath Ledger"
-},
+document.getElementById("result").innerHTML = "";
 
-{
-question:"Which movie features
+document.getElementById("nextBtn").style.display = "none";
+
+let q = quiz[currentQuestion];
+
+document.getElementById("question").innerHTML = q.question;
+
+let html = "";
+
+q.options.forEach(option => {
+html += `
+<button class="option" onclick="checkAnswer('${option}')">
+${option}
+</button>
+`;
+});
+
+document.getElementById("options").innerHTML = html;
+}
+
+function checkAnswer(selected){
+
+if(selected === quiz[currentQuestion].answer){
+score++;
+document.getElementById("result").innerHTML = "✅ Correct!";
+}
+else{
+document.getElementById("result").innerHTML =
+"❌ Wrong! Correct answer: " + quiz[currentQuestion].answer;
+}
+
+document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion < quiz.length){
+loadQuestion();
+}
+else{
+
+document.querySelector(".container").innerHTML = `
+<h1>🎉 Quiz Completed</h1>
+<h2>Your Score: ${score}/${quiz.length}</h2>
+<button onclick="location.reload()">Play Again</button>
+`;
+
+}
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
