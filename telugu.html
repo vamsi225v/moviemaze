@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>Telugu Quiz - MovieMaze</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -20,7 +19,7 @@ max-width:700px;
 margin:auto;
 background:#222;
 padding:30px;
-border-radius:10px;
+border-radius:12px;
 }
 
 .option{
@@ -29,33 +28,42 @@ width:100%;
 padding:12px;
 margin:10px 0;
 border:none;
-border-radius:5px;
+border-radius:8px;
 background:#333;
 color:white;
 cursor:pointer;
+font-size:16px;
 }
 
 .option:hover{
 background:#444;
 }
 
-#result{
-font-size:20px;
-margin-top:15px;
+.correct{
+background:green !important;
+}
+
+.wrong{
+background:red !important;
+}
+
+.stats{
+color:#ffc107;
+font-weight:bold;
+margin-bottom:20px;
 }
 
 #nextBtn{
+display:none;
 background:#ffc107;
 border:none;
 padding:12px 20px;
-border-radius:5px;
+border-radius:8px;
 cursor:pointer;
-display:none;
 margin-top:15px;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -64,7 +72,13 @@ margin-top:15px;
 
 <h1>🟦 Telugu Movie Quiz</h1>
 
-<h3 id="question"></h3>
+<div class="stats">
+<span id="progress"></span>
+&nbsp; | &nbsp;
+<span id="scoreDisplay"></span>
+</div>
+
+<h2 id="question"></h2>
 
 <div id="options"></div>
 
@@ -114,51 +128,88 @@ answer:"Fahadh Faasil"
 
 let currentQuestion = 0;
 let score = 0;
+let answered = false;
 
 function loadQuestion(){
 
-document.getElementById("result").innerHTML="";
-document.getElementById("nextBtn").style.display="none";
+answered = false;
+
+document.getElementById("result").innerHTML = "";
+
+document.getElementById("nextBtn").style.display = "none";
+
+document.getElementById("progress").innerHTML =
+`Question ${currentQuestion + 1} of ${quiz.length}`;
+
+document.getElementById("scoreDisplay").innerHTML =
+`Score: ${score}`;
 
 let q = quiz[currentQuestion];
 
 document.getElementById("question").innerHTML =
-`Question ${currentQuestion+1} of ${quiz.length}<br><br>${q.question}`;
+q.question;
 
-let html="";
+let html = "";
 
-q.options.forEach(option=>{
+q.options.forEach(option => {
+
 html += `
 <button class="option"
-onclick="checkAnswer('${option}')">
+onclick="checkAnswer(this,'${option}')">
 ${option}
 </button>
 `;
+
 });
 
-document.getElementById("options").innerHTML=html;
+document.getElementById("options").innerHTML = html;
 
 }
 
-function checkAnswer(selected){
+function checkAnswer(button, selected){
+
+if(answered) return;
+
+answered = true;
 
 let correct = quiz[currentQuestion].answer;
 
-if(selected===correct){
+let buttons =
+document.querySelectorAll(".option");
+
+buttons.forEach(btn => {
+
+btn.disabled = true;
+
+if(btn.innerText === correct){
+btn.classList.add("correct");
+}
+
+});
+
+if(selected === correct){
 
 score++;
 
+button.classList.add("correct");
+
 document.getElementById("result").innerHTML =
-"✅ Correct";
+"✅ Correct!";
 
 }else{
 
+button.classList.add("wrong");
+
 document.getElementById("result").innerHTML =
-"❌ Wrong. Correct answer: " + correct;
+"❌ Wrong! Correct answer: " + correct;
 
 }
 
-document.getElementById("nextBtn").style.display="inline-block";
+document.getElementById("scoreDisplay").innerHTML =
+`Score: ${score}`;
+
+document.getElementById("nextBtn").style.display =
+"inline-block";
 
 }
 
@@ -172,10 +223,25 @@ loadQuestion();
 
 }else{
 
-document.querySelector(".container").innerHTML = `
+let rank = "🍿 Movie Beginner";
+
+if(score >= 3){
+rank = "🌟 Movie Expert";
+}
+
+if(score === 5){
+rank = "🏆 Movie Master";
+}
+
+document.querySelector(".container").innerHTML =
+`
 <h1>🎉 Telugu Quiz Completed</h1>
-<h2>Score: ${score}/${quiz.length}</h2>
-<button onclick="location.reload()">Play Again</button>
+<h2>Your Score: ${score}/${quiz.length}</h2>
+<h3>${rank}</h3>
+<br>
+<button onclick="location.reload()">
+Play Again
+</button>
 `;
 
 }
