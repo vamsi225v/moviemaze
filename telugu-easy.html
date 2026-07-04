@@ -376,42 +376,70 @@ if(score>=13) badge="🏆 Telugu Legend";
 let accuracy =
 Math.round((score/quiz.length)*100);
 
-let actionButton = "";
-
 if(score >= 10){
 
-actionButton = `
-<p style="color:lightgreen;font-size:22px;">
-✅ Medium Unlocked
+document.querySelector(".container").innerHTML = `
+<h1>🎉 Telugu Easy Completed</h1>
+
+<h2>Score: ${score}/${quiz.length}</h2>
+
+<h3>${badge}</h3>
+
+<p>Accuracy: ${accuracy}%</p>
+
+<p style="color:lightgreen;font-size:22px;font-weight:bold;">
+✅ Congratulations!
 </p>
 
-telugu-medium.html
-Continue To Medium
+<p style="font-size:18px;">
+You are eligible for Medium Level
+</p>
+
+<a href="telugu-medium.html"
+style="
+display:inline-block;
+padding:12px 25px;
+background:#28a745;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-size:18px;
+font-weight:bold;
+margin-top:10px;
+">
+🚀 Start Medium Level
+</a>
+
+<br><br>
+
+<button
+onclick="location.reload()"
+style="
+padding:12px 20px;
+background:#ffc107;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+">
+Play Again
 </button>
 `;
 
 }else{
 
-actionButton = `
+document.querySelector(".container").innerHTML = `
+<h1>🎉 Telugu Easy Completed</h1>
+
+<h2>Score: ${score}/${quiz.length}</h2>
+
+<h3>${badge}</h3>
+
+<p>Accuracy: ${accuracy}%</p>
+
 <p style="color:#ff6666;font-size:20px;">
-❌ Score 10/15 to Unlock Medium
+❌ You need at least 10/15 to unlock Medium
 </p>
-`;
-
-}
-
-document.querySelector(".container").innerHTML=`
-<h1>🎉 Telugu Easy Completed</h1>
-
-<h2>Score: ${score}/${quiz.length}</h2>
-
-<h3>${badge}</h3>
-
-<p>Accuracy: ${accuracy}%</p>
-
-${actionButton}
-
-<br><br>
 
 <button
 onclick="location.reload()"
@@ -419,45 +447,15 @@ style="
 padding:12px 20px;
 background:#ffc107;
 border:none;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
 font-size:16px;
 ">
-Play Again
-</button>
-`;
-<h1>🎉 Telugu Easy Completed</h1>
-
-<h2>Score: ${score}/${quiz.length}</h2>
-
-<h3>${badge}</h3>
-
-<p>Accuracy: ${accuracy}%</p>
-
-${actionButton}
-
-<br><br>
-
-<button
-onclick="location.reload()"
-style="
-padding:12px 20px;
-background:#ffc107;
-border:none;
-border-radius:6px;
-cursor:pointer;
-font-size:16px;
-">
-Play Again
+Try Again
 </button>
 `;
 
 }
-
-}
-
-loadQuestion();
-
 </script>
 
 </body>
