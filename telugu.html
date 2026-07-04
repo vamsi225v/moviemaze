@@ -15,7 +15,7 @@ padding:20px;
 }
 
 .container{
-max-width:700px;
+max-width:800px;
 margin:auto;
 background:#222;
 padding:30px;
@@ -61,6 +61,11 @@ padding:12px 20px;
 border-radius:8px;
 cursor:pointer;
 margin-top:15px;
+font-size:16px;
+}
+
+#nextBtn:hover{
+background:#ffcf33;
 }
 
 </style>
@@ -122,6 +127,36 @@ answer:"Prabhas"
 question:"Who played Bhanwar Singh Shekhawat in Pushpa?",
 options:["Fahadh Faasil","Jagapathi Babu","Sunil","Rao Ramesh"],
 answer:"Fahadh Faasil"
+},
+
+{
+question:"Which movie stars Ram Charan and NTR together?",
+options:["RRR","Magadheera","Orange","Dhruva"],
+answer:"RRR"
+},
+
+{
+question:"Who directed Pushpa?",
+options:["Rajamouli","Sukumar","Trivikram","Boyapati"],
+answer:"Sukumar"
+},
+
+{
+question:"Which movie features the character Sivudu?",
+options:["Eega","Baahubali","Chatrapathi","Salaar"],
+answer:"Baahubali"
+},
+
+{
+question:"Who played the lead role in Eega?",
+options:["Nani","Prabhas","NTR","Allu Arjun"],
+answer:"Nani"
+},
+
+{
+question:"Which movie features the character Bheem?",
+options:["RRR","Pushpa","Salaar","Khaleja"],
+answer:"RRR"
 }
 
 ];
@@ -134,9 +169,9 @@ function loadQuestion(){
 
 answered = false;
 
-document.getElementById("result").innerHTML = "";
+document.getElementById("result").innerHTML="";
 
-document.getElementById("nextBtn").style.display = "none";
+document.getElementById("nextBtn").style.display="none";
 
 document.getElementById("progress").innerHTML =
 `Question ${currentQuestion + 1} of ${quiz.length}`;
@@ -149,9 +184,9 @@ let q = quiz[currentQuestion];
 document.getElementById("question").innerHTML =
 q.question;
 
-let html = "";
+let html="";
 
-q.options.forEach(option => {
+q.options.forEach(option=>{
 
 html += `
 <button class="option"
@@ -162,11 +197,12 @@ ${option}
 
 });
 
-document.getElementById("options").innerHTML = html;
+document.getElementById("options").innerHTML =
+html;
 
 }
 
-function checkAnswer(button, selected){
+function checkAnswer(button,selected){
 
 if(answered) return;
 
@@ -177,7 +213,7 @@ let correct = quiz[currentQuestion].answer;
 let buttons =
 document.querySelectorAll(".option");
 
-buttons.forEach(btn => {
+buttons.forEach(btn=>{
 
 btn.disabled = true;
 
@@ -225,20 +261,34 @@ loadQuestion();
 
 let rank = "🍿 Movie Beginner";
 
-if(score >= 3){
+if(score >= 5){
+rank = "🎬 Movie Fan";
+}
+
+if(score >= 7){
 rank = "🌟 Movie Expert";
 }
 
-if(score === 5){
+if(score >= 9){
 rank = "🏆 Movie Master";
 }
 
+let accuracy =
+Math.round((score / quiz.length) * 100);
+
 document.querySelector(".container").innerHTML =
+
 `
 <h1>🎉 Telugu Quiz Completed</h1>
+
 <h2>Your Score: ${score}/${quiz.length}</h2>
+
 <h3>${rank}</h3>
+
+<p>Accuracy: ${accuracy}%</p>
+
 <br>
+
 <button onclick="location.reload()">
 Play Again
 </button>
