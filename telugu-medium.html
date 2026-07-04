@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Telugu Medium Quiz - MovieMaze</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
 body{
 background:#111;
 color:white;
 font-family:Arial,sans-serif;
-text-align:center;
 padding:20px;
+text-align:center;
 }
 
 .container{
@@ -21,15 +24,21 @@ padding:30px;
 border-radius:12px;
 }
 
+.stats{
+color:#ffc107;
+font-weight:bold;
+margin-bottom:20px;
+}
+
 .option{
 display:block;
 width:100%;
 padding:12px;
 margin:10px 0;
-border:none;
-border-radius:8px;
 background:#333;
 color:white;
+border:none;
+border-radius:8px;
 cursor:pointer;
 font-size:16px;
 }
@@ -42,22 +51,16 @@ background:green !important;
 background:red !important;
 }
 
-.stats{
-color:#ffc107;
-font-weight:bold;
-margin-bottom:20px;
-}
-
 #nextBtn{
 display:none;
+padding:12px 20px;
 background:#ffc107;
 border:none;
-padding:12px 20px;
 border-radius:8px;
 cursor:pointer;
-margin-top:15px;
 font-size:16px;
 }
+
 </style>
 </head>
 
@@ -70,7 +73,7 @@ font-size:16px;
 <div class="stats">
 <span id="progress"></span>
  |
-<span id="scoreDisplay"></span>
+<span id="score"></span>
 </div>
 
 <h2 id="question"></h2>
@@ -91,16 +94,292 @@ const allQuestions = [
 
 {
 question:"What was Mahesh Babu's character name in Pokiri?",
-options:["Pandu","Ajay","Krishna","Nandu"],
+options:["Pandu","Krishna","Ajay","Rishi"],
 answer:"Pandu"
 },
 
 {
 question:"What was Prabhas' character name in Salaar?",
-options:["Deva","Rocky","Amar","Bheem"],
+options:["Deva","Rocky","Surya","Shiva"],
 answer:"Deva"
 },
 
 {
+question:"Who played Obul Reddy in Okkadu?",
+options:["Prakash Raj","Sonu Sood","Subbaraju","Rao Ramesh"],
+answer:"Prakash Raj"
+},
+
+{
 question:"Who played Kattappa in Baahubali?",
-options:["Prakash Raj","Sathyaraj","Jagapathi Babu","Rao Ramesh"],
+options:["Sathyaraj","Prakash Raj","Jagapathi Babu","Rao Ramesh"],
+answer:"Sathyaraj"
+},
+
+{
+question:"What was Vijay Deverakonda's character name in Arjun Reddy?",
+options:["Arjun","Ajay","Pandu","Rishi"],
+answer:"Arjun"
+},
+
+{
+question:"Who directed Godavari?",
+options:["Sekhar Kammula","Trivikram","Rajamouli","Bapu"],
+answer:"Sekhar Kammula"
+},
+
+{
+question:"Who directed Anand?",
+options:["Sekhar Kammula","Trivikram","Bapu","Dasari"],
+answer:"Sekhar Kammula"
+},
+
+{
+question:"Who composed music for Athadu?",
+options:["Mani Sharma","DSP","Thaman","Keeravani"],
+answer:"Mani Sharma"
+},
+
+{
+question:"Who composed music for Pokiri?",
+options:["Mani Sharma","DSP","Thaman","Keeravani"],
+answer:"Mani Sharma"
+},
+
+{
+question:"Who played Bhallaladeva?",
+options:["Rana","Prabhas","NTR","Nani"],
+answer:"Rana"
+},
+
+{
+question:"Who played Bhanwar Singh in Pushpa?",
+options:["Fahadh Faasil","Sunil","Jagapathi Babu","Subbaraju"],
+answer:"Fahadh Faasil"
+},
+
+{
+question:"Who portrayed Savitri in Mahanati?",
+options:["Keerthy Suresh","Samantha","Anushka","Sai Pallavi"],
+answer:"Keerthy Suresh"
+},
+
+{
+question:"Who directed Mahanati?",
+options:["Nag Ashwin","Rajamouli","Sukumar","Trivikram"],
+answer:"Nag Ashwin"
+},
+
+{
+question:"Who directed Rangasthalam?",
+options:["Sukumar","Rajamouli","Boyapati","Trivikram"],
+answer:"Sukumar"
+},
+
+{
+question:"Who played Chitti Babu in Rangasthalam?",
+options:["Ram Charan","NTR","Nani","Allu Arjun"],
+answer:"Ram Charan"
+},
+
+{
+question:"Who directed Jathi Ratnalu?",
+options:["Anudeep","Trivikram","Nag Ashwin","Rajamouli"],
+answer:"Anudeep"
+},
+
+{
+question:"Which actor starred in Goodachari?",
+options:["Adivi Sesh","Nani","Sharwanand","Vishwak Sen"],
+answer:"Adivi Sesh"
+},
+
+{
+question:"Who directed Agent Sai Srinivasa Athreya?",
+options:["Swaroop RSJ","Nag Ashwin","Anudeep","Vivek Athreya"],
+answer:"Swaroop RSJ"
+},
+
+{
+question:"Who played the lead role in Balagam?",
+options:["Priyadarshi","Nani","Naveen","Vishwak Sen"],
+answer:"Priyadarshi"
+},
+
+{
+question:"Who directed C/o Kancharapalem?",
+options:["Venkatesh Maha","Sukumar","Trivikram","Nag Ashwin"],
+answer:"Venkatesh Maha"
+}
+
+];
+
+function shuffle(array){
+
+for(let i=array.length-1;i>0;i--){
+
+let j=Math.floor(Math.random()*(i+1));
+
+[array[i],array[j]]=[array[j],array[i]];
+
+}
+
+}
+
+shuffle(allQuestions);
+
+const quiz = allQuestions.slice(0,15);
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion(){
+
+answered=false;
+
+document.getElementById("result").innerHTML="";
+document.getElementById("nextBtn").style.display="none";
+
+document.getElementById("progress").innerHTML=
+`Question ${currentQuestion+1} of ${quiz.length}`;
+
+document.getElementById("score").innerHTML=
+`Score: ${score}`;
+
+const q = quiz[currentQuestion];
+
+document.getElementById("question").innerHTML =
+q.question;
+
+let html="";
+
+q.options.forEach(option=>{
+
+html += `
+<button class="option"
+onclick="checkAnswer(this,'${option}')">
+${option}
+</button>
+`;
+
+});
+
+document.getElementById("options").innerHTML = html;
+
+}
+
+function checkAnswer(button,selected){
+
+if(answered) return;
+
+answered=true;
+
+const correct = quiz[currentQuestion].answer;
+
+const buttons =
+document.querySelectorAll(".option");
+
+buttons.forEach(btn=>{
+
+btn.disabled=true;
+
+if(btn.innerText===correct){
+
+btn.classList.add("correct");
+
+}
+
+});
+
+if(selected===correct){
+
+score++;
+
+document.getElementById("result").innerHTML =
+"✅ Correct";
+
+}else{
+
+button.classList.add("wrong");
+
+document.getElementById("result").innerHTML =
+"❌ Incorrect";
+
+}
+
+document.getElementById("score").innerHTML =
+`Score: ${score}`;
+
+document.getElementById("nextBtn").style.display =
+"inline-block";
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion < quiz.length){
+
+loadQuestion();
+
+}else{
+
+let accuracy =
+Math.round((score/quiz.length)*100);
+
+let unlock="";
+
+if(score >= 10){
+
+unlock = `
+telugu-hard.html
+🟠 Continue To Hard
+</a>
+`;
+
+}else{
+
+unlock = `
+<p style="color:#ff6666;">
+❌ Need 10/15 To Unlock Hard
+</p>
+`;
+
+}
+
+document.querySelector(".container").innerHTML = `
+<h1>🎉 Medium Level Complete</h1>
+
+<h2>Score: ${score}/${quiz.length}</h2>
+
+<p>Accuracy: ${accuracy}%</p>
+
+${unlock}
+
+<br><br>
+
+<button
+onclick="location.reload()"
+style="
+padding:12px 20px;
+background:#ffc107;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">
+Play Again
+</button>
+`;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
