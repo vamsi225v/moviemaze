@@ -373,8 +373,32 @@ if(score>=6) badge="🎬 Movie Fan";
 if(score>=10) badge="🌟 Movie Buff";
 if(score>=13) badge="🏆 Telugu Legend";
 
-let accuracy=
+let accuracy =
 Math.round((score/quiz.length)*100);
+
+let actionButton = "";
+
+if(score >= 10){
+
+actionButton = `
+<p style="color:lightgreen;font-size:22px;">
+✅ Medium Unlocked
+</p>
+
+telugu-medium.html
+Continue To Medium
+</button>
+`;
+
+}else{
+
+actionButton = `
+<p style="color:#ff6666;font-size:20px;">
+❌ Score 10/15 to Unlock Medium
+</p>
+`;
+
+}
 
 document.querySelector(".container").innerHTML=`
 <h1>🎉 Telugu Easy Completed</h1>
@@ -385,7 +409,31 @@ document.querySelector(".container").innerHTML=`
 
 <p>Accuracy: ${accuracy}%</p>
 
-<button onclick="location.reload()">
+${actionButton}
+
+<br><br>
+
+<button
+onclick="location.reload()"
+style="
+padding:12px 20px;
+background:#ffc107;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:16px;
+">
 Play Again
 </button>
 `;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
